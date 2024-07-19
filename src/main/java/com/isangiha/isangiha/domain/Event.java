@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,31 +18,20 @@ public class Event {
     private Long eventId;
 
     private String enterpriseName;
-
     private String eventName;
-
     private Integer headcount;
-
     private String startDate;
-
     private String endDate;
-
     private String deliveryDate;
-
     private String collectionDate;
-
     private String location;
-
-    private Integer cluster;
-
-    private Boolean meeting;
-
+    private String cluster;  // Integer에서 String으로 변경
+    private String meeting;
     private String meetingDate;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Container> containers;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Coordinate> coordinates;
-
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Container> containers;
-
 }

@@ -4,14 +4,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name = "container")
 public class Container {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long containerId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
@@ -20,9 +23,6 @@ public class Container {
     private String containerType;
     private Integer quantity;
 
-    public Container(Event event, String containerType, Integer quantity) {
-        this.event = event;
-        this.containerType = containerType;
-        this.quantity = quantity;
-    }
+    @OneToMany(mappedBy = "container", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Coordinate> coordinates;
 }
