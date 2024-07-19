@@ -1,11 +1,12 @@
 package com.isangiha.isangiha.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "coordinate")
 public class Coordinate {
     @Id
@@ -13,14 +14,17 @@ public class Coordinate {
     private Long coordinateId;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "container_with_coordinates_id")
+    private ContainerWithCoordinates containerWithCoordinates;
 
-    public Coordinate(String latitude, String longitude) {
+    private String name;
+    private String latitude;
+    private String longitude;
+
+    public Coordinate(ContainerWithCoordinates containerWithCoordinates, String name, String latitude, String longitude) {
+        this.containerWithCoordinates = containerWithCoordinates;
+        this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
-    String latitude;
-    String longitude;
 }
